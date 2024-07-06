@@ -50,7 +50,8 @@
     <input type="text" name="fullname" placeholder="Full name" required />
     <input type="text" name="username" autocomplete="off" placeholder="Username" required />
     <input type="email" name="email" placeholder="Email address" required />
-    <input type="text" name="phone" placeholder="Phone" required />
+    <!-- <input type="tel" name="phone" id="phone" placeholder="Phone" required /> -->
+    <input type="tel"  id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" placeholder="Phone number" required>
     <input type="password" name="password" autocomplete="on" placeholder="Password" required />
     <div class="checkbox">
         <input type="checkbox" id="signupCheck" required />
@@ -63,6 +64,18 @@
 <!-- partial -->
 
 </body>
+<script>
+        function validatePhoneNumber() {
+            const phoneInput = document.getElementById("phone").value;
+            // Define a regex pattern for phone numbers (e.g., (123) 456-7890 or 123-456-7890)
+            const phonePattern = /^(\(\d{3}\) |\d{3}-)\d{3}-\d{4}$/;
+            if (phonePattern.test(phoneInput)) {
+                alert("Valid phone number.");
+            } else {
+                alert("Invalid phone number. Please enter a valid phone number.");
+            }
+        }
+    </script>
 </html>
 
 

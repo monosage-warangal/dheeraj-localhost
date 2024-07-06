@@ -1,6 +1,7 @@
 let ratings = [];
 let selectedRating = 0;
 let currentCarId = null;
+let currentSlideIndex = 0; // Track the current slide index
 
 document.addEventListener('DOMContentLoaded', () => {
   const carData = JSON.parse(sessionStorage.getItem('selectedCar'));
@@ -9,11 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     populateHiddenInputs(carData);
   }
 
-  document.getElementById('btn').addEventListener('click', (event) => {
+  document.getElementById('rent_btn').addEventListener('click', (event) => {
     event.preventDefault(); // Prevent default form submission for debugging
     console.log('Form data before submission:', getFormData());
     document.getElementById('bookingForm').submit();
   });
+
+  attachEventListeners(); // Attach event listeners for review and rating
 });
 
 function populateDetailsPage(data) {
@@ -39,6 +42,7 @@ function populateDetailsPage(data) {
     div.appendChild(img);
     carouselInner.appendChild(div);
   });
+  showSlide(currentSlideIndex); // Show the initial slide
 }
 
 function populateHiddenInputs(data) {
@@ -48,6 +52,8 @@ function populateHiddenInputs(data) {
   document.getElementById('car-price-hidden').value = data.price;
   document.getElementById('car-details-hidden').value = data.details.join(', ');
   document.getElementById('car-images-hidden').value = data.images.join(', ');
+  const username = sessionStorage.getItem('username');
+  document.getElementById('username-hidden').value = username;
 }
 
 function getFormData() {
@@ -61,14 +67,17 @@ function getFormData() {
   };
 }
 
-
 function attachEventListeners() {
   document.querySelectorAll('.star').forEach(star => {
     star.addEventListener('click', selectRating);
   });
 
   document.getElementById('review-submit').addEventListener('click', addReview);
-  document.getElementById('btn').addEventListener('click', handleRentNow);
+  document.getElementById('rent_btn').addEventListener('click', handleRentNow);
+
+  // Carousel controls
+  document.querySelector('.carousel-control-prev').addEventListener('click', prevSlide);
+  document.querySelector('.carousel-control-next').addEventListener('click', nextSlide);
 }
 
 function selectRating(event) {
@@ -159,39 +168,22 @@ function handleRentNow() {
   form.submit();
 }
 
-function populateDetailsPage(data) {
-  document.getElementById('car-title').innerText = data.title;
-  document.getElementById('car-year').innerText = data.year;
-  document.getElementById('car-price').innerText = data.price;
-
-  const detailsContainer = document.getElementById('car-details');
-  detailsContainer.innerHTML = ''; // Clear previous details
-  data.details.forEach(detail => {
-    const p = document.createElement('p');
-    p.innerText = detail;
-    detailsContainer.appendChild(p);
-  });
-
-  const carouselInner = document.querySelector('.carousel-inner');
-  carouselInner.innerHTML = ''; // Clear previous images
-  data.images.forEach((imgSrc, index) => {
-    const div = document.createElement('div');
-    div.className = 'carousel-item' + (index === 0 ? ' active' : '');
-    const img = document.createElement('img');
-    img.src = imgSrc;
-    div.appendChild(img);
-    carouselInner.appendChild(div);
+// Carousel functions
+function showSlide(index) {
+  const slides = document.querySelectorAll('.carousel-item');
+  slides.forEach((slide, i) => {
+    slide.style.display = (i === index) ? 'block' : 'none';
   });
 }
 
-function populateHiddenInputs(data) {
-  document.getElementById('car-id').value = data.id;
-  document.getElementById('car-title-hidden').value = data.title;
-  document.getElementById('car-year-hidden').value = data.year;
-  document.getElementById('car-price-hidden').value = data.price;
-  document.getElementById('car-details-hidden').value = data.details.join(', ');
-  document.getElementById('car-images-hidden').value = data.images.join(', ');
-  // Assuming username is fetched from session storage or similar
-  const username = sessionStorage.getItem('username');
-  document.getElementById('username-hidden').value = username;
+function nextSlide() {
+  const slides = document.querySelectorAll('.carousel-item');
+  currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+  showSlide(currentSlideIndex);
+}
+
+function prevSlide() {
+  const slides = document.querySelectorAll('.carousel-item');
+  currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+  showSlide(currentSlideIndex);
 }

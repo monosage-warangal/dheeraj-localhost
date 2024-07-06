@@ -4,7 +4,6 @@
   border: border-box;
 }
 
-
   h1{
     padding-top:1px;
   }
@@ -38,7 +37,6 @@ position: sticky;
 
    }
 
-/*---------------------------------------------------------------------------------------------------------------------*/
    body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -46,14 +44,15 @@ position: sticky;
     overflow-x: hidden; /* Prevent horizontal scroll */
 }
 .hero{
-  margin-top: 018px;
   background-image:url("images/car1.jpg");
   background-size: cover;
   background-position:center;
   height: 400px;
   padding-top: 100px;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
+
 .booking-container {
     backdrop-filter: blur(0px);
     /* background-color: white; */
@@ -64,7 +63,7 @@ position: sticky;
     max-width: 1200px;
     margin: 0 auto;
    text-align: center;
-    margin-top: 10px;    
+    margin-top:10px;    
 }
 
 .booking-options {
@@ -141,7 +140,6 @@ input, select {
     background-color: #0056b3;
 }
 
-/*-----------------------------------------------------------------------------------------------------------------*/
 
 
 /* =============iccccccccccccccc---------------------------- */
@@ -216,7 +214,6 @@ input, select {
   color: #666;
 }
 
-/*------------------------------------------------------*/
 
 /* <div class="container-section-cars">
     <div class="content-section-cars"> */
@@ -309,6 +306,9 @@ margin-left:auto ;
 }
 .img-roadmap img{
   border-radius: 18px 0;
-} 
+}
 
 
+.container-home-fAQs h1{
+  color: #333;
+}

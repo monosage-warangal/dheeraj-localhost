@@ -1,7 +1,7 @@
 <?php
 include('config.php');
 session_start();
-
+// REGISTERING USER DATA IN users table
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fullname = $_POST['fullname'];
     $username = $_POST['username'];

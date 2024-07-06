@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("config.php");
-
+//BOOKING DETAILS(HOMEPAGE) STORING IN bookings TABLE
 if (!isset($_SESSION['username'])) {
     // Store form data in session variables
     $_SESSION['booking_type'] = $_POST['booking_type'];
@@ -16,7 +16,7 @@ if (!isset($_SESSION['username'])) {
     header('Location: signin.php');
     exit;
 }
-
+$id = $_POST['id'];
 $booking_type = $_POST['booking_type'];
 $pickup = $_POST['pickup'];
 $dropoff = $_POST['dropoff'];
@@ -26,7 +26,7 @@ $pickup_time = $_POST['pickup_time'];
 $airport_type = isset($_POST['airport_type']) ? $_POST['airport_type'] : null;
 $username = $_SESSION['username']; // Assuming you're passing the username from the form
 
-$sql = "INSERT INTO book (booking_type, pickup, dropoff, pickup_date, return_date, pickup_time, airport_type, UserName)
+$sql = "INSERT INTO bookings (booking_type, pickup, dropoff, pickup_date, return_date, pickup_time, airport_type, UserName)
         VALUES (:booking_type, :pickup, :dropoff, :pickup_date, :return_date, :pickup_time, :airport_type, :username)";
 
 try {
@@ -47,5 +47,4 @@ try {
 }
 
 $conn = null; // Close the PDO connection properly
-
 ?>
